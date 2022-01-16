@@ -22,6 +22,7 @@ def ordinal(num):
 async def on_ready():
     print(f"Logged in as {bot.user.name}({bot.user.id})")
 
+@bot.event
 async def on_message(message):
 
     if message.author == client.user:
