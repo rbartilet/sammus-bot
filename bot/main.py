@@ -49,6 +49,9 @@ async def on_message(message):
         
     elif message.author.id == 284562536378925058 and 'sammus' in message.content: 
       await message.channel.send('Sorry Gabbie, I am a disappointment to you. I do not know how to respond to that.')
+    
+    elif message.author.id == 284562536378925058 and 'hi' in message.content:
+      await message.channel.send('Hello, Gabbie.')
 
     elif 'sammus' in message.content:
       await message.channel.send('Sorry, I do not know how to respond to that.')
