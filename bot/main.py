@@ -25,7 +25,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
 
-    if message.author == client.user:
+    if message.author == bot.user:
         return
 
     elif message.content.startswith('Hello, sammus'):
