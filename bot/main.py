@@ -25,7 +25,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     
-    for i in range(2,30):
+    for i in range(2,1000):
         if 'sammus' in message.content and str(i) in message.content and 'days' in message.content and 'from now' in message.content:
             day_of_year = datetime.now() + timedelta(i)
             day_of_year = day_of_year.timetuple().tm_yday
