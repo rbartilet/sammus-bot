@@ -26,10 +26,10 @@ async def on_ready():
 async def on_message(message):
     
     for i in range(2,30):
-        if 'sammus' in message.content and str(i) in message.content and 'day' in message.content:
-            day_of_year = datetime.now() - timedelta(i)
-            day_of_year = yesterday_of_year.timetuple().tm_yday
-            str_day = ordinal(yesterday_of_year)
+        if 'sammus' in message.content and str(i) in message.content and 'day' in message.content and 'from now' in message.content:
+            day_of_year = datetime.now() + timedelta(i)
+            day_of_year = day_of_year.timetuple().tm_yday
+            str_day = ordinal(day_of_year)
             await message.channel.send('Were you asking for the day ' + str(i) + ' days from now? It will be the ' + str_day + ' day of the year.')
             break
     
@@ -60,7 +60,7 @@ async def on_message(message):
         
     elif 'sammus' in message.content and 'tomorrow' in message.content:
         tomorrow_of_year = datetime.now() + timedelta(1)
-        tomorrow_of_year = yesterday_of_year.timetuple().tm_yday
+        tomorrow_of_year = tomorrow_of_year.timetuple().tm_yday
         str_day = ordinal(tomorrow_of_year)
         await message.channel.send('Were you asking for the day yesterday? It was the ' + str_day + ' day of the year.')
         
