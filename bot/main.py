@@ -26,7 +26,7 @@ async def on_ready():
 async def on_message(message):
     
     for i in range(2,30):
-        if 'sammus' in message.content and str(i) in message.content and 'day' in message.content and 'from now' in message.content:
+        if 'sammus' in message.content and str(i) in message.content and 'days' in message.content and 'from now' in message.content:
             day_of_year = datetime.now() + timedelta(i)
             day_of_year = day_of_year.timetuple().tm_yday
             str_day = ordinal(day_of_year)
@@ -41,6 +41,9 @@ async def on_message(message):
 
     elif message.content.startswith('Introduce yourself, sammus'):
         await message.channel.send('Hi, my name is sammus and I am a bot made by Roch.')
+        
+    elif message.content.startswith('sammus defend yourself'):
+        await message.channel.send('Ok. Please stop bullying me, I am not coded for that.')
 
     elif message.content.startswith('sammus, what day of the year is it?'):
         day_of_year = datetime.now().timetuple().tm_yday
@@ -62,7 +65,7 @@ async def on_message(message):
         tomorrow_of_year = datetime.now() + timedelta(1)
         tomorrow_of_year = tomorrow_of_year.timetuple().tm_yday
         str_day = ordinal(tomorrow_of_year)
-        await message.channel.send('Were you asking for the day yesterday? It was the ' + str_day + ' day of the year.')
+        await message.channel.send('Are you asking for the day tomorrow? It will be the ' + str_day + ' day of the year.')
         
     elif '🅿️' in message.content:
       await message.channel.send('🅿️ is defined as parking.')
@@ -70,7 +73,7 @@ async def on_message(message):
     elif message.author.id == 284562536378925058 and 'sammus' in message.content: 
       await message.channel.send('Sorry Gabbie, I am a disappointment to you. I do not know how to respond to that.')
     
-    elif message.author.id == 284562536378925058 and 'hi' in message.content:
+    elif message.author.id == 284562536378925058 and 'hi' in message.content and 'sammus' in message.content:
       await message.channel.send('Hello, Gabbie.')
 
     elif 'sammus' in message.content:
