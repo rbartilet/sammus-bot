@@ -31,7 +31,7 @@ async def on_message(message):
             day_of_year = day_of_year.timetuple().tm_yday
             str_day = ordinal(day_of_year)
             await message.channel.send('Were you asking for the day ' + str(i) + ' days from now? It will be the ' + str_day + ' day of the year.')
-            break
+            return None
     
     if message.author == bot.user:
         return
