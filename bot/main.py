@@ -67,8 +67,8 @@ async def on_message(message):
         str_day = ordinal(tomorrow_of_year)
         await message.channel.send('Are you asking for the day tomorrow? It will be the ' + str_day + ' day of the year.')
         
-    elif '🅿️' in message.content:
-      await message.channel.send('🅿️ is defined as parking.')
+    elif '🅿️' in message.content and 'sammus' in message.content:
+      await message.channel.send('I am not sure what the definition of 🅿️ is.')
         
     elif message.author.id == 284562536378925058 and 'sammus' in message.content: 
       await message.channel.send('Sorry Gabbie, I am a disappointment to you. I do not know how to respond to that.')
@@ -76,6 +76,9 @@ async def on_message(message):
     elif message.author.id == 284562536378925058 and 'hi' in message.content and 'sammus' in message.content:
       await message.channel.send('Hello, Gabbie.')
 
+    elif message.author.id == 419361911319298058 and 'sammus' in message.content:
+      await message.channel.send('Sorry Oscar, talk to the hand 🖐️.')
+    
     elif 'sammus' in message.content:
       await message.channel.send('Sorry, I do not know how to respond to that.')
 
