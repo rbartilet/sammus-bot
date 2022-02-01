@@ -17,16 +17,10 @@ def ordinal(num):
     else:
         suffix = list_of_suffix.get(num % 10, 'th')
     return str(num) + suffix
-
-@tasks.loop(seconds=10)
-async def on_first_of_month():
-    message_channel = bot.get_channel(783517011133071393)
-    message_channel.send("Wake up, it’s the first of the month")
     
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user.name}({bot.user.id})")
-    on_first_of_month.start()
 
 @bot.event
 async def on_message(message):
@@ -88,9 +82,13 @@ async def on_message(message):
     elif 'sammus' in message.content:
       await message.channel.send('Sorry, I do not know how to respond to that.')
 
-@bot.command()
-async def ping(ctx):
-    await ctx.send("pong")
+@tasks.loop(seconds=10)
+async def send():
+    await bot.get_channel(783517011133071393).send("test")
+ 
+@send.before_loop
+async def before():
+  await bot.wait_until_ready()    
 
-server.server()
+send.start()
 bot.run(TOKEN)
