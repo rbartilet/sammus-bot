@@ -84,7 +84,7 @@ async def on_message(message):
 
 @tasks.loop(hours=24)
 async def send():
-    if datetime.datetime.today().day == 1:
+    if datetime.today().day == 1:
         await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
  
 @send.before_loop
