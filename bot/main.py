@@ -68,27 +68,28 @@ async def on_message(message):
         await message.channel.send('Are you asking for the day tomorrow? It will be the ' + str_day + ' day of the year.')
         
     elif '🅿️' in message.content and 'sammus' in message.content:
-      await message.channel.send('I am not sure what the definition of 🅿️ is.')
+        await message.channel.send('I am not sure what the definition of 🅿️ is.')
         
     elif message.author.id == 284562536378925058 and 'sammus' in message.content: 
-      await message.channel.send('Sorry Gabbie, I am a disappointment to you. I do not know how to respond to that.')
+        await message.channel.send('Sorry Gabbie, I am a disappointment to you. I do not know how to respond to that.')
     
     elif message.author.id == 284562536378925058 and 'hi' in message.content and 'sammus' in message.content:
-      await message.channel.send('Hello, Gabbie.')
+        await message.channel.send('Hello, Gabbie.')
 
     elif message.author.id == 419361911319298058 and 'sammus' in message.content:
-      await message.channel.send('Sorry Oscar, talk to the hand 🖐️.')
+        await message.channel.send('Sorry Oscar, talk to the hand 🖐️.')
     
     elif 'sammus' in message.content:
-      await message.channel.send('Sorry, I do not know how to respond to that.')
+        await message.channel.send('Sorry, I do not know how to respond to that.')
 
-@tasks.loop(seconds=10)
+@tasks.loop(hours=24)
 async def send():
-    await bot.get_channel(783517011133071393).send("test")
+    if datetime.datetime.today().day == 1:
+        await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
  
 @send.before_loop
 async def before():
-  await bot.wait_until_ready()    
+    await bot.wait_until_ready()    
 
 send.start()
 bot.run(TOKEN)
