@@ -86,6 +86,10 @@ async def on_message(message):
 async def ping(ctx):
     await ctx.send("pong")
 
+@tasks.loop(hours=24)
+async def on_first_of_month():
+    message_channel = 461601814673096713
+    await message_channel.send("Wake up, it’s the first of the month")
 
 
 server.server()
