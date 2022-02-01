@@ -18,9 +18,9 @@ def ordinal(num):
         suffix = list_of_suffix.get(num % 10, 'th')
     return str(num) + suffix
 
-@tasks.loop(seconds=20.0)
+@tasks.loop(seconds=10)
 async def on_first_of_month():
-    message_channel = bot.get_channel(461601814673096713)
+    message_channel = bot.get_channel(783517011133071393)
     message_channel.send("Wake up, it’s the first of the month")
     
 @bot.event
@@ -91,12 +91,6 @@ async def on_message(message):
 @bot.command()
 async def ping(ctx):
     await ctx.send("pong")
-
-@tasks.loop(seconds=20.0)
-async def on_first_of_month():
-    message_channel = 461601814673096713
-    await message_channel.send("Wake up, it’s the first of the month")
-
 
 server.server()
 bot.run(TOKEN)
