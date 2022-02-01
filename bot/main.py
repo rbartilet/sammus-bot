@@ -18,6 +18,13 @@ def ordinal(num):
         suffix = list_of_suffix.get(num % 10, 'th')
     return str(num) + suffix
 
+target_channel = 461601814673096713
+
+@tasks.loop(seconds=20.0)
+async def on_first_of_month():
+    message_channel = bot.get_channel(target_channel)
+    await message_channel.send("Wake up, it’s the first of the month")
+    
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user.name}({bot.user.id})")
