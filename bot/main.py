@@ -86,13 +86,13 @@ async def on_message(message):
     elif '🅿️' in message.content and 'sammus' in message.content:
         await message.channel.send('I am not sure what the definition of 🅿️ is.')
     
-    elif 'sammus' in message.content and 'lottery' in message.content and 'this week' in message.content:
+    elif 'sammus' in message.content and 'lotto' in message.content and 'this week' in message.content:
         if lot_num == 1:
             await message.channel.send('Ew, it is ' + lot_dict.get(lot_num) + ' this week 🤮.')
         else:
             await message.channel.send('Hello, it is ' + lot_dict.get(lot_num) + ' this week.')
         
-    elif 'sammus' in message.content and 'lottery' in message.content and 'next week' in message.content:
+    elif 'sammus' in message.content and 'lotto' in message.content and 'next week' in message.content:
         if lot_num == 12:
             temp_num = 1
         else:
