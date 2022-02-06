@@ -88,7 +88,7 @@ async def on_message(message):
     
     elif 'sammus' in message.content and 'lotto' in message.content and 'this week' in message.content:
         if lot_num == 1:
-            await message.channel.send('Ew, it is ' + lot_dict.get(lot_num) + ' this week 🤮.')
+            await message.channel.send('Ew, it\'s ' + lot_dict.get(lot_num) + ' this week 🤮.')
         else:
             await message.channel.send('Hello, it is ' + lot_dict.get(lot_num) + ' this week.')
         
@@ -99,7 +99,7 @@ async def on_message(message):
             temp_num = lot_num + 1
         
         if temp_num == 1:
-            await message.channel.send('Ew, it is ' + lot_dict.get(temp_num) + ' next week 🤮.')
+            await message.channel.send('Ew, it\'s ' + lot_dict.get(temp_num) + ' next week 🤮.')
         else:
             await message.channel.send('Hello, it is ' + lot_dict.get(temp_num) + ' next week.')
        
@@ -121,6 +121,7 @@ async def to_do():
         lot_num = lot_num + 1
         if lot_num > 12:
             lot_num = 1
+        await bot.get_channel(461601814673096713).send("Happy Monday, this week's lotto rotation is " + lot_dict.get(lot_num) + ".")        
     
     if datetime.today().day == 1:
         await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
