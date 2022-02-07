@@ -66,6 +66,9 @@ async def on_message(message):
         str_day = ordinal(day_of_year)
         await message.channel.send('Good morning, happy ' + str_day + ' day of the year.')
     
+    elif 'sammus' in message.content and 'thank' in message.content:
+        await message.channel.send('No problem 😊')
+    
     elif 'sammus' in message.content and 'today' in message.content:
         day_of_year = datetime.now().timetuple().tm_yday
         str_day = ordinal(day_of_year)
@@ -116,19 +119,28 @@ async def on_message(message):
         await message.channel.send('Sorry, I do not know how to respond to that.')
 
 @tasks.loop(hours=24)
-async def to_do():
-    if datetime.today().weekday() == 0:
-        lot_num = lot_num + 1
-        if lot_num > 12:
-            lot_num = 1
-        await bot.get_channel(461601814673096713).send("Happy Monday, this week's lotto rotation is " + lot_dict.get(lot_num) + ".")        
-    
+async def send():    
     if datetime.today().day == 1:
         await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
  
-@to_do.before_loop
-async def before():
-    await bot.wait_until_ready()    
+@send.before_loop
+async def before_send():
+    await bot.wait_until_ready()
+    
+@tasks.loop(hours=24)
+async def lottery():
+    if datetime.today().weekday() == 0:
+        lot_num = lot_num + 1
+        
+        if lot_num > 12:
+            lot_num = 1
+        
+        await bot.get_channel(461601814673096713).send("Happy Monday, this week's lotto rotation is " + lot_dict.get(lot_num) + ".")        
+ 
+@lottery.before_loop
+async def before_lottery():
+    await bot.wait_until_ready()     
 
-to_do.start()
+send.start()
+lottery.start()
 bot.run(TOKEN)
