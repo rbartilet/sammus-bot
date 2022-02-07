@@ -5,6 +5,7 @@ import os
 import server
 from discord.ext import commands, tasks
 from datetime import datetime, timedelta
+global lot_num
 
 bot = commands.Bot(command_prefix="!")
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -120,7 +121,11 @@ async def on_message(message):
 
 @tasks.loop(hours=24)
 async def to_do():
+    if datetime.today().day == 1:
+        await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
+    
     if datetime.today().weekday() == 0:
+        global lot_num
         lot_num = lot_num + 1
         
         if lot_num > 12:
