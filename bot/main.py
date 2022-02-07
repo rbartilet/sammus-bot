@@ -120,9 +120,6 @@ async def on_message(message):
 
 @tasks.loop(hours=24)
 async def to_do():
-    if datetime.today().day == 1:
-        await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
-        
     if datetime.today().weekday() == 0:
         lot_num = lot_num + 1
         
