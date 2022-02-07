@@ -118,16 +118,13 @@ async def on_message(message):
     elif 'sammus' in message.content:
         await message.channel.send('Sorry, I do not know how to respond to that.')
 
-@tasks.loop(hours=24)
-async def send():    
+@tasks.loop(days=1)
+async def send():
+    await bot.wait_until_ready()
     if datetime.today().day == 1:
         await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
- 
-@send.before_loop
-async def before_send():
-    await bot.wait_until_ready()
-    
-@tasks.loop(hours=24)
+
+@tasks.loop(days=1)
 async def lottery():
     if datetime.today().weekday() == 0:
         lot_num = lot_num + 1
@@ -136,10 +133,6 @@ async def lottery():
             lot_num = 1
         
         await bot.get_channel(461601814673096713).send("Happy Monday, this week's lotto rotation is " + lot_dict.get(lot_num) + ".")        
- 
-@lottery.before_loop
-async def before_lottery():
-    await bot.wait_until_ready()     
 
 send.start()
 lottery.start()
