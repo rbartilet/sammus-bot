@@ -127,7 +127,7 @@ async def to_do():
     if datetime.today().day == 1:
         await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
    
-    if datetime.today().weekday() == 1:
+    if datetime.today().weekday() == 0:
         file = open("bot/counter.txt", "w")
         file.write(str(lot_num + 1))
 
