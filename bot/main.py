@@ -32,10 +32,10 @@ lot_dict = {1 : "Oscar",
             11: "Charles",
             12: "Phil"}
 
-with open("counter.txt", "r") as file:
+with open("bot/counter.txt", "r") as file:
   lot_num = int(file.readline().rstrip())
 
-temp_num = lot_num + 1
+temp_num = 1
 
 @bot.event
 async def on_ready():
@@ -128,21 +128,21 @@ async def to_do():
         await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
    
     if datetime.today().weekday() == 1:
-        file = open("counter.txt", "w")
+        file = open("bot/counter.txt", "w")
         file.write(str(lot_num + 1))
 
-    with open("counter.txt", "r") as file:
+    with open("bot/counter.txt", "r") as file:
         lot_num = int(file.readline().rstrip())
         
     if lot_num > 12:
-        file = open("counter.txt", "w")
+        file = open("bot/counter.txt", "w")
         file.write(str(1))
         file.close()
 
-    with open("counter.txt", "r") as file:
+    with open("bot/counter.txt", "r") as file:
         lot_num = int(file.readline().rstrip())
         
-    await bot.get_channel(783517011133071393).send("Happy Monday, this week's lotto rotation is " + lot_dict.get(lot_num) + ".")        
+    await bot.get_channel(461601814673096713).send("Happy Monday, this week's lotto rotation is " + lot_dict.get(lot_num) + ".")        
 
 @to_do.before_loop
 async def before_to_do():
