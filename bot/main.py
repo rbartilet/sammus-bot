@@ -130,19 +130,19 @@ async def to_do():
     if datetime.today().weekday() == 0:
         file = open("bot/counter.txt", "w")
         file.write(str(lot_num + 1))
-
-    with open("bot/counter.txt", "r") as file:
-        lot_num = int(file.readline().rstrip())
         
-    if lot_num > 12:
-        file = open("bot/counter.txt", "w")
-        file.write(str(1))
-        file.close()
-
-    with open("bot/counter.txt", "r") as file:
-        lot_num = int(file.readline().rstrip())
+        with open("bot/counter.txt", "r") as file:
+            lot_num = int(file.readline().rstrip())
         
-    await bot.get_channel(461601814673096713).send("Happy Monday, this week's lotto rotation is " + lot_dict.get(lot_num) + ".")        
+        if lot_num > 12:
+            file = open("bot/counter.txt", "w")
+            file.write(str(1))
+            file.close()
+        
+        with open("bot/counter.txt", "r") as file:
+            lot_num = int(file.readline().rstrip())
+        
+        await bot.get_channel(461601814673096713).send("Happy Monday, this week's lotto rotation is " + lot_dict.get(lot_num) + ".")        
 
 @to_do.before_loop
 async def before_to_do():
