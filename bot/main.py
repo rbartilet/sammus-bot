@@ -3,9 +3,9 @@ import os
 #import pynacl
 #import dnspython
 import server
-import pytz
 from discord.ext import commands, tasks
 from datetime import datetime, timedelta
+from pytz import timezone
 global lot_num
 
 bot = commands.Bot(command_prefix="!")
@@ -34,7 +34,7 @@ lot_dict = {1 : "Oscar",
             12: "Phil"}
 
 with open("bot/counter.txt", "r") as file:
-  lot_num = int(file.readline().rstrip())
+    lot_num = int(file.readline().rstrip())
 
 temp_num = 1
 
@@ -55,10 +55,6 @@ async def on_message(message):
     
     if message.author == bot.user:
         return
-    
-    elif 'what time is it' in message.content and 'sammus' in message.content:
-        est_tz = pytz.timezone('Canada/Eastern')
-        await message.channel.send(datetime.now(tz = est_tz).strftime("%Y-%m-%d %H:%M:%S"))
     
     elif message.content.startswith('Hello, sammus'):
         await message.channel.send('Hello!')
