@@ -4,6 +4,7 @@ import os
 #import dnspython
 import server
 from discord.ext import commands, tasks
+import pytz
 from datetime import datetime, timedelta
 global lot_num
 
@@ -68,6 +69,10 @@ async def on_message(message):
         day_of_year = datetime.now().timetuple().tm_yday
         str_day = ordinal(day_of_year)
         await message.channel.send('Good morning, happy ' + str_day + ' day of the year.')
+    
+    elif 'sammus' in message.content and 'what time isit' in message.content:
+        est_timezone = pytz.timezone('Canada/Eastern')
+        await message.channel.send(datetime.now(tz = est_timezone).strftime("%Y-%m-%d %H:%M:%S"))
     
     elif 'sammus' in message.content and 'thank' in message.content:
         await message.channel.send('No problem 😊.')
