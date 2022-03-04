@@ -70,7 +70,7 @@ async def on_message(message):
         str_day = ordinal(day_of_year)
         await message.channel.send('Good morning, happy ' + str_day + ' day of the year.')
     
-    elif 'sammus' in message.content and 'what time isit' in message.content:
+    elif 'sammus' in message.content and 'what time is it' in message.content:
         est_timezone = pytz.timezone('Canada/Eastern')
         await message.channel.send(datetime.now(tz = est_timezone).strftime("%Y-%m-%d %H:%M:%S"))
     
@@ -125,5 +125,36 @@ async def on_message(message):
     
     elif 'sammus' in message.content:
         await message.channel.send('Sorry, I do not know how to respond to that.')
-               
+       
+@tasks.loop(hours=24)
+async def to_do():
+    global lot_num
+    est_timezone = pytz.timezone('Canada/Eastern')
+
+    if datetime.now(tz = est_timezone).strftime("%d") == '01':
+        await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
+   
+    if datetime.now(tz = est_timezone).weekday() == 0:
+        file = open("bot/counter.txt", "w")
+        file.write(str(lot_num + 1))
+        
+        with open("bot/counter.txt", "r") as file:
+            lot_num = int(file.readline().rstrip())
+        
+        if lot_num > 12:
+            file = open("bot/counter.txt", "w")
+            file.write(str(1))
+            file.close()
+        
+        with open("bot/counter.txt", "r") as file:
+            lot_num = int(file.readline().rstrip())
+        
+        await bot.get_channel(461601814673096713).send("Happy Monday, this week's lotto rotation is " + lot_dict.get(lot_num) + ".")        
+
+@to_do.before_loop
+async def before_to_do():
+    await bot.wait_until_ready()
+
+to_do.start()
+    
 bot.run(TOKEN)
