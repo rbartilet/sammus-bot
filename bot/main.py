@@ -3,6 +3,7 @@ import os
 #import pynacl
 #import dnspython
 import server
+import pytz
 from discord.ext import commands, tasks
 from datetime import datetime, timedelta
 global lot_num
@@ -54,7 +55,11 @@ async def on_message(message):
     
     if message.author == bot.user:
         return
-
+    
+    elif 'what time is it' in message.content and 'sammus' in message.content:
+        est_tz = pytz.timezone('Canada/Eastern')
+        await message.channel.send(datetime.now(tz = est_tz).strftime("%Y-%m-%d %H:%M:%S"))
+    
     elif message.content.startswith('Hello, sammus'):
         await message.channel.send('Hello!')
 
@@ -124,10 +129,12 @@ async def on_message(message):
 @tasks.loop(hours=24)
 async def to_do():
     global lot_num
-    if datetime.today().day == 1:
+    est_tz = pytz.timezone('Canada/Eastern')
+
+    if datetime.now(tz = est_tz).strftime("%d") == 01:
         await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
    
-    if datetime.today().weekday() == 0:
+    if datetime.now(tz = est_tz).weekday() == 0:
         file = open("bot/counter.txt", "w")
         file.write(str(lot_num + 1))
         
