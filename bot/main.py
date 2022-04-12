@@ -68,7 +68,6 @@ async def func():
         file.close()
         await bot.get_channel(461601814673096713).send("Happy Monday, this week's lotto rotation is " + lot_dict.get(lot_num) + ".")        
     
-    await c.send("Your Message")
 
 @bot.event
 async def on_ready():
