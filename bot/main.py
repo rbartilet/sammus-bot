@@ -6,6 +6,9 @@ import server
 from discord.ext import commands, tasks
 import pytz
 from datetime import datetime, timedelta
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
+
 global lot_num
 
 bot = commands.Bot(command_prefix="!")
@@ -38,9 +41,45 @@ with open("bot/counter.txt", "r") as file:
 
 temp_num = 1
 
+async def func():
+    await bot.wait_until_ready()
+    
+    global lot_num
+    with open("bot/counter.txt", "r") as file:
+        lot_num = int(file.readline().rstrip())
+    
+    if datetime.datetime.now().strftime("%d") == '01':
+        await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
+   
+    if datetime.datetime.now().weekday() == 0:
+        file = open("bot/counter.txt", "w")
+        file.write(str(lot_num + 1))
+        
+        with open("bot/counter.txt", "r") as file:
+            lot_num = int(file.readline().rstrip())
+        
+        if lot_num > 12:
+            file = open("bot/counter.txt", "w")
+            file.write(str(1))
+        
+        with open("bot/counter.txt", "r") as file:
+            lot_num = int(file.readline().rstrip())
+        
+        file.close()
+        await bot.get_channel(461601814673096713).send("Happy Monday, this week's lotto rotation is " + lot_dict.get(lot_num) + ".")        
+    
+    await c.send("Your Message")
+
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user.name}({bot.user.id})")
+    scheduler = AsyncIOScheduler()
+
+    #sends "Your Message" at 12PM and 18PM (Local Time)
+    scheduler.add_job(func, CronTrigger(hour="6, 8", minute="0", second="0")) 
+
+    #starting the scheduler
+    scheduler.start()
 
 @bot.event
 async def on_message(message):
@@ -126,35 +165,35 @@ async def on_message(message):
     elif 'sammus' in message.content:
         await message.channel.send('Sorry, I do not know how to respond to that.')
        
-@tasks.loop(hours=24)
-async def to_do():
-    global lot_num
-    est_timezone = pytz.timezone('Canada/Eastern')
+#@tasks.loop(hours=24)
+#async def to_do():
+#    global lot_num
+#    est_timezone = pytz.timezone('Canada/Eastern')
+#
+#    if datetime.now(tz = est_timezone).strftime("%d") == '01':
+#        await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
+#   
+#    if datetime.now(tz = est_timezone).weekday() == 0:
+#        file = open("bot/counter.txt", "w")
+#        file.write(str(lot_num + 1))
+#        
+#        with open("bot/counter.txt", "r") as file:
+#            lot_num = int(file.readline().rstrip())
+#        
+#        if lot_num > 12:
+#            file = open("bot/counter.txt", "w")
+#            file.write(str(1))
+#            file.close()
+#        
+#        with open("bot/counter.txt", "r") as file:
+#            lot_num = int(file.readline().rstrip())
+#        
+#        await bot.get_channel(461601814673096713).send("Happy Monday, this week's lotto rotation is " + lot_dict.get(lot_num) + ".")        
 
-    if datetime.now(tz = est_timezone).strftime("%d") == '01':
-        await bot.get_channel(461601814673096713).send("Wake up, it's the first of the month.")
-   
-    if datetime.now(tz = est_timezone).weekday() == 0:
-        file = open("bot/counter.txt", "w")
-        file.write(str(lot_num + 1))
-        
-        with open("bot/counter.txt", "r") as file:
-            lot_num = int(file.readline().rstrip())
-        
-        if lot_num > 12:
-            file = open("bot/counter.txt", "w")
-            file.write(str(1))
-            file.close()
-        
-        with open("bot/counter.txt", "r") as file:
-            lot_num = int(file.readline().rstrip())
-        
-        await bot.get_channel(461601814673096713).send("Happy Monday, this week's lotto rotation is " + lot_dict.get(lot_num) + ".")        
+#@to_do.before_loop
+#async def before_to_do():
+#    await bot.wait_until_ready()
 
-@to_do.before_loop
-async def before_to_do():
-    await bot.wait_until_ready()
-
-to_do.start()
+#to_do.start()
     
 bot.run(TOKEN)
